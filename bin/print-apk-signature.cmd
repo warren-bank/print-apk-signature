@@ -1,7 +1,7 @@
 @echo off
 
 if [%1]==[] (
-  echo Filepath to APK is undefined.
+  echo Error: Filepath to APK is undefined.
   exit /B 1
 )
 

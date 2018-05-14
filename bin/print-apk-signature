@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+  echo 'Error: Filepath to APK is undefined.'
+  exit 1
+fi
+
+apk_path="$1"
+crt_path='META-INF/CERT.RSA'
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+tmp_dir="${DIR}/.tmp"
+[ -d "$tmp_dir" ] && rm -rf "$tmp_dir"
+mkdir -p "$tmp_dir"
+
+unzip -d "$tmp_dir" "$apk_path" "$crt_path" >/dev/null 2>&1
+
+crt_path="${tmp_dir}/${crt_path}"
+
+keytool -printcert -file "$crt_path"
+
+rm -rf "$tmp_dir"
