@@ -8,6 +8,10 @@ fi
 apk_path="$1"
 crt_path='META-INF/CERT.RSA'
 
+if [ ! -z "$2" ]; then
+  fingerprint="$2"
+fi
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 tmp_dir="${DIR}/.tmp"
@@ -18,6 +22,25 @@ unzip -d "$tmp_dir" "$apk_path" "$crt_path" >/dev/null 2>&1
 
 crt_path="${tmp_dir}/${crt_path}"
 
-keytool -printcert -file "$crt_path"
+if [ -z "$fingerprint" ]; then
+  keytool -printcert -file "$crt_path"
+else
+  (
+    IFS=$'\n'
+    filter="${fingerprint}:"
+    for line in `keytool -printcert -file "$crt_path"`; do
+      filtered_line="${line/$filter/}"
+
+      if [ ! "$line" == "$filtered_line" ]; then
+        filtered_line="${filtered_line//[^0-9a-fA-F]/}"
+
+        if [ ! -z "$filtered_line" ]; then
+          echo "$filtered_line"
+          break
+        fi
+      fi
+    done
+  )
+fi
 
 rm -rf "$tmp_dir"

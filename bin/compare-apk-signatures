@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+  echo 'Error: Filepath to 1st APK is undefined.'
+  exit 1
+fi
+
+if [ -z "$2" ]; then
+  echo 'Error: Filepath to 2nd APK is undefined.'
+  exit 1
+fi
+
+apk_path_1="$1"
+apk_path_2="$2"
+
+fingerprint='SHA1'
+
+apk_fingerprint_1=$(print-apk-signature "$apk_path_1" "$fingerprint")
+apk_fingerprint_2=$(print-apk-signature "$apk_path_2" "$fingerprint")
+
+[ ! -z "$apk_fingerprint_1" ] && [ ! -z "$apk_fingerprint_2" ] && if [ "$apk_fingerprint_1" == "$apk_fingerprint_2" ]; then
+  echo 'EQUAL'
+else
+  echo 'NOT EQUAL'
+fi
