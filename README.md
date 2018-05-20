@@ -2,7 +2,7 @@
 
 #### Summary:
 
-Command-line shell script to print the signature of a signed Android APK (Application Package Kit) file.
+Command-line shell script to print the signature of a _JAR-signed_ Android APK (Application Package Kit) file.
 
 #### Usage:
 
@@ -57,4 +57,15 @@ compare-apk-signatures "/path/to/file_1.apk" "/path/to/file_2.apk"
 
 #### Related Documentation and Articles:
 
-* [Android Packaging Signatures](https://github.com/keesj/gomo/wiki/AndroidPackageSignatures)
+* [JAR-signed APK Verification Scheme v1](https://github.com/keesj/gomo/wiki/AndroidPackageSignatures)
+
+* [APK Signature Scheme v2](https://source.android.com/security/apksigning/v2)
+  * [additional information in the _Android Developers Blog_](https://android-developers.googleblog.com/2016/11/understanding-apk-packaging-in-android-studio-2-2.html)
+  * notes:
+    * deprecates _JAR-signed APK Verification Scheme v1_
+    * introduced in Android 7.0 (Nougat, API level 24)
+    * an APK can be signed by both v1 and v2 signatures at the same time, so it remains backwards compatible with previous Android releases
+  * implications:
+    * an APK that is built having a `minSdkVersion` >= 24 can opt to exclude _JAR-signed APK Verification Scheme v1_
+  * relevance:
+    * _JAR-signed APK Verification Scheme v1_ is required by `print-apk-signature`
