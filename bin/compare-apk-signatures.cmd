@@ -13,7 +13,7 @@ if [%2]==[] (
 set apk_path_1="%~1"
 set apk_path_2="%~2"
 
-set fingerprint=SHA1
+set fingerprint=SHA-1
 
 for /F "tokens=* delims=" %%L in ('call print-apk-signature %apk_path_1% %fingerprint%') do set apk_fingerprint_1=%%L
 for /F "tokens=* delims=" %%L in ('call print-apk-signature %apk_path_2% %fingerprint%') do set apk_fingerprint_2=%%L

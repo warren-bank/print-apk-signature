@@ -7,46 +7,34 @@ if [%1]==[] (
 )
 
 set apk_path="%~1"
-set crt_path="META-INF/CERT.RSA"
 
 if not [%2]==[] (
   set fingerprint=%~2
 
-  if not "%fingerprint%"=="MD5" if not "%fingerprint%"=="SHA1" if not "%fingerprint%"=="SHA256" (
+  if not "%fingerprint%"=="MD5" if not "%fingerprint%"=="SHA-1" if not "%fingerprint%"=="SHA-256" (
     echo Error: fingerprint_hash_algorithm is invalid.
     exit /B 1
   )
 )
 
-set tmp_dir="%~dp0.\.tmp"
-if exist %tmp_dir% rmdir /Q /S %tmp_dir%
-mkdir %tmp_dir%
-
-7z x -o%tmp_dir% %apk_path% %crt_path% >NUL 2>&1
-
-set crt_path=%tmp_dir%\%crt_path%
-set crt_path=%crt_path:"\"=\%
-set crt_path=%crt_path:\.\=\%
-set crt_path=%crt_path:/=\%
+set apksigner_jar="%~dp0..\libs\apksigner\apksigner.jar"
 
 if not defined fingerprint (
-  keytool -printcert -file %crt_path%
+  java -jar %apksigner_jar% verify --print-certs %apk_path%
 ) else (
-  for /F "tokens=* delims=" %%L in ('keytool -printcert -file %crt_path%') do call :filter_line %%L
+  for /F "tokens=* delims=" %%L in ('java -jar %apksigner_jar% verify --print-certs %apk_path%') do call :filter_line %%L
   if defined filtered_fingerprint echo !filtered_fingerprint!
 )
 goto done
 
 :filter_line
   set line=%*
-  set filtered_line=!line:%fingerprint%:=!
+  set filtered_line=!line:Signer #1 certificate %fingerprint% digest:=!
   if not "!line!"=="!filtered_line!" (
     set filtered_fingerprint=!filtered_line!
-    set filtered_fingerprint=!filtered_fingerprint::=!
     set filtered_fingerprint=!filtered_fingerprint: =!
   )
   goto :eof
 
 :done
-rmdir /Q /S %tmp_dir%
 endlocal

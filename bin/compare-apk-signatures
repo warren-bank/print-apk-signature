@@ -13,7 +13,7 @@ fi
 apk_path_1="$1"
 apk_path_2="$2"
 
-fingerprint='SHA1'
+fingerprint='SHA-1'
 
 apk_fingerprint_1=$(print-apk-signature "$apk_path_1" "$fingerprint")
 apk_fingerprint_2=$(print-apk-signature "$apk_path_2" "$fingerprint")

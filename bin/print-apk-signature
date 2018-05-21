@@ -6,13 +6,12 @@ if [ -z "$1" ]; then
 fi
 
 apk_path="$1"
-crt_path='META-INF/CERT.RSA'
 
 if [ ! -z "$2" ]; then
   fingerprint="$2"
 
   case "$fingerprint" in
-    MD5|SHA1|SHA256)
+    MD5|SHA-1|SHA-256)
       ;;
     *)
       echo 'Error: fingerprint_hash_algorithm is invalid.'
@@ -22,22 +21,15 @@ if [ ! -z "$2" ]; then
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-tmp_dir="${DIR}/.tmp"
-[ -d "$tmp_dir" ] && rm -rf "$tmp_dir"
-mkdir -p "$tmp_dir"
-
-unzip -d "$tmp_dir" "$apk_path" "$crt_path" >/dev/null 2>&1
-
-crt_path="${tmp_dir}/${crt_path}"
+apksigner_jar="${DIR}/../libs/apksigner/apksigner.jar"
 
 if [ -z "$fingerprint" ]; then
-  keytool -printcert -file "$crt_path"
+  java -jar "$apksigner_jar" verify --print-certs "$apk_path"
 else
   (
     IFS=$'\n'
-    filter="${fingerprint}:"
-    for line in `keytool -printcert -file "$crt_path"`; do
+    filter="Signer #1 certificate ${fingerprint} digest:"
+    for line in `java -jar "$apksigner_jar" verify --print-certs "$apk_path"`; do
       filtered_line="${line/$filter/}"
 
       if [ ! "$line" == "$filtered_line" ]; then
@@ -51,5 +43,3 @@ else
     done
   )
 fi
-
-rm -rf "$tmp_dir"

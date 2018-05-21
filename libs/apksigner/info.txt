@@ -1,0 +1,40 @@
+--------------------------------------------------------------------------------
+
+https://android.googlesource.com/platform/tools/apksig/+/refs/heads/master/src/main/java/com/android/apksig/ApkVerifier.java
+
+--------------------------------------------------------------------------------
+
+https://developer.android.com/studio/command-line/apksigner
+
+--------------------------------------------------------------------------------
+
+easiest (well trusted) place to download:
+=========================================
+
+https://chromium.googlesource.com/android_tools/+/master
+https://chromium.googlesource.com/android_tools/+/master/sdk/build-tools/
+
+27.0.3:
+=======
+https://chromium.googlesource.com/android_tools/+/c22a664c39af72dd8f89200220713dcad811300a/sdk/build-tools/27.0.3
+https://chromium.googlesource.com/android_tools/+/c22a664c39af72dd8f89200220713dcad811300a/sdk/build-tools/27.0.3/lib/apksigner.jar
+https://chromium.googlesource.com/android_tools/+/c22a664c39af72dd8f89200220713dcad811300a/sdk/build-tools/27.0.3/lib/apksigner.jar?format=TEXT
+
+25.0.2:
+=======
+https://chromium.googlesource.com/android_tools/+/023e2f65409a2b7886b8d644d6a88542ead6cd0a/sdk/build-tools/25.0.2
+https://chromium.googlesource.com/android_tools/+/023e2f65409a2b7886b8d644d6a88542ead6cd0a/sdk/build-tools/25.0.2/lib/apksigner.jar
+https://chromium.googlesource.com/android_tools/+/023e2f65409a2b7886b8d644d6a88542ead6cd0a/sdk/build-tools/25.0.2/lib/apksigner.jar?format=TEXT
+
+--------------------------------------------------------------------------------
+
+https://github.com/google/gitiles/issues/7
+
+Q: how to download a binary file from a git repo in googlesource?
+A: Base64-encoded raw file support is (recently) available.
+   Add querystring to URL:
+       ?format=TEXT
+   To decode:
+       cat apksigner.txt | base64 -d > apksigner.jar
+
+--------------------------------------------------------------------------------
