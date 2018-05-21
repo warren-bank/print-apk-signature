@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-keytool_HOME='/c/PortableApps/Java/bin'
-PATH="${keytool_HOME}:${PATH}"
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PATH="${DIR}/../../bin:${PATH}"
+source "${DIR}/../env.sh"
 
 apk_path="${DIR}/../file.apk"
 

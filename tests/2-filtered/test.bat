@@ -1,16 +1,13 @@
 @echo off
 
-call "C:\PortableApps\Java\env.bat"
-
-set unzip_HOME=C:\PortableApps\7-Zip\App\7-Zip64
-set PATH=%unzip_HOME%;%PATH%
-
-set PATH=%~dp0..\..\bin;%PATH%
+call "%~dp0..\env.bat"
 
 set apk_path="%~dp0..\file.apk"
 set fingerprint=SHA1
 
 call print-apk-signature %apk_path% %fingerprint%
 
-echo.
-pause
+if defined CMD_INITIATED_FROM_EXPLORER (
+  echo.
+  pause
+)
