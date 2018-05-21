@@ -20,7 +20,7 @@ if not [%2]==[] (
 set apksigner_jar="%~dp0..\libs\apksigner\apksigner.jar"
 
 if not defined fingerprint (
-  java -jar %apksigner_jar% verify --print-certs %apk_path%
+  java -jar %apksigner_jar% verify --print-certs -v %apk_path%
 ) else (
   for /F "tokens=* delims=" %%L in ('java -jar %apksigner_jar% verify --print-certs %apk_path%') do call :filter_line %%L
   if defined filtered_fingerprint echo !filtered_fingerprint!

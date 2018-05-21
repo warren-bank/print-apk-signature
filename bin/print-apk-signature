@@ -24,7 +24,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 apksigner_jar="${DIR}/../libs/apksigner/apksigner.jar"
 
 if [ -z "$fingerprint" ]; then
-  java -jar "$apksigner_jar" verify --print-certs "$apk_path"
+  java -jar "$apksigner_jar" verify --print-certs -v "$apk_path"
 else
   (
     IFS=$'\n'
