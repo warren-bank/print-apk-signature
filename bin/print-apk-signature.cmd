@@ -11,6 +11,11 @@ set crt_path="META-INF/CERT.RSA"
 
 if not [%2]==[] (
   set fingerprint=%~2
+
+  if not "%fingerprint%"=="MD5" if not "%fingerprint%"=="SHA1" if not "%fingerprint%"=="SHA256" (
+    echo Error: fingerprint_hash_algorithm is invalid.
+    exit /B 1
+  )
 )
 
 set tmp_dir="%~dp0.\.tmp"

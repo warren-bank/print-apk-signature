@@ -10,6 +10,15 @@ crt_path='META-INF/CERT.RSA'
 
 if [ ! -z "$2" ]; then
   fingerprint="$2"
+
+  case "$fingerprint" in
+    MD5|SHA1|SHA256)
+      ;;
+    *)
+      echo 'Error: fingerprint_hash_algorithm is invalid.'
+      exit 1
+      ;;
+  esac
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
