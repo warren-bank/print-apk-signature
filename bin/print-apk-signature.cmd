@@ -10,8 +10,7 @@ set apk_path="%~1"
 
 if not [%2]==[] (
   set fingerprint=%~2
-
-  if not "%fingerprint%"=="MD5" if not "%fingerprint%"=="SHA-1" if not "%fingerprint%"=="SHA-256" (
+  if not "!fingerprint!"=="MD5" if not "!fingerprint!"=="SHA-1" if not "!fingerprint!"=="SHA-256" (
     echo Error: fingerprint_hash_algorithm is invalid.
     exit /B 1
   )
@@ -29,7 +28,7 @@ goto done
 
 :filter_line
   set line=%*
-  set filtered_line=!line:Signer #1 certificate %fingerprint% digest:=!
+  call set filtered_line=%%line:Signer #1 certificate !fingerprint! digest: =%%
   if not "!line!"=="!filtered_line!" (
     set filtered_fingerprint=!filtered_line!
     set filtered_fingerprint=!filtered_fingerprint: =!
