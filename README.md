@@ -54,7 +54,12 @@ compare-apk-signatures "/path/to/file_1.apk" "/path/to/file_2.apk"
 
 #### Related Documentation and Articles:
 
+* [Application Signing: general overview](https://source.android.com/security/apksigning)
+
 * [JAR-signed APK Verification Scheme v1](https://github.com/keesj/gomo/wiki/AndroidPackageSignatures)
 
 * [APK Signature Scheme v2](https://source.android.com/security/apksigning/v2)
   * [additional information in the _Android Developers Blog_](https://android-developers.googleblog.com/2016/11/understanding-apk-packaging-in-android-studio-2-2.html)
+
+* [APK Signature Scheme v3](https://source.android.com/security/apksigning/v3)
+  * [less technical summary in an article on _XDA_](https://www.xda-developers.com/apk-signature-scheme-v3-key-rotation/)
